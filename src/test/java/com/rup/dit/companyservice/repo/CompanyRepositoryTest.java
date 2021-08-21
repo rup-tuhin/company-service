@@ -1,7 +1,6 @@
 package com.rup.dit.companyservice.repo;
 
 import com.rup.dit.companyservice.domain.CompanyDAO;
-import com.rup.dit.companyservice.domain.OwnerDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-
+import static com.rup.dit.companyservice.TestData.getCompanyDAO;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -96,21 +94,4 @@ public class CompanyRepositoryTest {
     }
 
 
-    private CompanyDAO getCompanyDAO() {
-        OwnerDAO owner1 = new OwnerDAO();
-        owner1.setName("Test Owner 1");
-        owner1.setSocialSecurityNumber("123123");
-
-        OwnerDAO owner2 = new OwnerDAO();
-        owner2.setName("Test Owner 2");
-        owner2.setSocialSecurityNumber("456456");
-
-        CompanyDAO company = new CompanyDAO();
-        company.setCompanyName("test company");
-        company.setCountry("IN");
-        company.setPhoneNumber("123456");
-        company.setOwners(Arrays.asList(owner1, owner2));
-
-        return company;
-    }
 }

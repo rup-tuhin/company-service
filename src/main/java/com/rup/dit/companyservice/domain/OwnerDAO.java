@@ -12,9 +12,6 @@ public class OwnerDAO implements Serializable {
     @GeneratedValue(strategy = SEQUENCE, generator = "company_gen")
     @SequenceGenerator(name = "company_gen", sequenceName = "company_seq")
     private Long ownerId;
-
-    @JoinColumn
-    private Long companyId;
     @Column
     private String name;
     @Column
@@ -22,18 +19,6 @@ public class OwnerDAO implements Serializable {
 
     public Long getOwnerId() {
         return ownerId;
-    }
-
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public Long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
     }
 
     public String getName() {

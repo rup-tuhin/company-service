@@ -1,15 +1,22 @@
 package com.rup.dit.companyservice.model;
 
-import com.rup.dit.companyservice.domain.OwnerDAO;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
+    private Long companyId;
     private String companyName;
     private String country;
     private String phoneNumber;
     private List<Owner> owners;
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
 
     public String getCompanyName() {
         return companyName;
@@ -36,7 +43,7 @@ public class Company {
     }
 
     public List<Owner> getOwners() {
-        if(null == owners){
+        if (null == owners) {
             owners = new ArrayList<>();
         }
         return owners;

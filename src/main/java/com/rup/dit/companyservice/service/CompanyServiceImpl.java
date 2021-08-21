@@ -25,21 +25,17 @@ public class CompanyServiceImpl implements CompanyService {
     private ModelMapper mapper;
 
     @Override
-    @Transactional
     public Company createCompany(Company company) {
         CompanyDAO toBeSaved = mapper.map(company, CompanyDAO.class);
         CompanyDAO savedRecord = companyRepository.save(toBeSaved);
-        return mapper.map(savedRecord, Company.class);
-
+        return extractModelFromDAO(savedRecord);
     }
 
+
     @Override
-    @Transactional
     public List<Company> getAllCompanies() {
-        List<CompanyDAO> records = companyRepository.findAll();
-        records.forEach(CompanyDAO::getOwners);
-        return records.stream()
-                .map(r->mapper.map(r, Company.class))
+        return companyRepository.findAll().stream()
+                .map(this::extractModelFromDAO)
                 .collect(Collectors.toList());
     }
 
@@ -47,7 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
     public Company getCompanyDetails(Long companyId) {
         CompanyDAO record = companyRepository.findById(companyId).orElse(null);
         if(record != null) {
-            return mapper.map(record, Company.class);
+            return extractModelFromDAO(record);
         }
         return null;
     }
@@ -59,7 +55,7 @@ public class CompanyServiceImpl implements CompanyService {
         if(record != null){
             example.setCompanyId(record.getCompanyId());
             CompanyDAO savedRecord = companyRepository.save(example);
-            return mapper.map(savedRecord, Company.class);
+            return extractModelFromDAO(savedRecord);
         }
         return null;
     }
@@ -70,7 +66,7 @@ public class CompanyServiceImpl implements CompanyService {
         if(record != null){
             record.getOwners().add(mapper.map(owner, OwnerDAO.class));
             CompanyDAO savedRecord = companyRepository.save(record);
-            return mapper.map(savedRecord, Company.class);
+            return extractModelFromDAO(savedRecord);
         }
         return null;
     }
@@ -78,5 +74,15 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public String checkSocialSecurityNumber(String socialSecurityNumber) {
         return new Random().nextBoolean() ? "valid" : "invalid";
+    }
+
+
+    private Company extractModelFromDAO(CompanyDAO savedRecord) {
+        Company result = mapper.map(savedRecord, Company.class);
+        result.getOwners()
+                .addAll(savedRecord.getOwners().stream()
+                    .map(o->mapper.map(o, Owner.class))
+                    .collect(Collectors.toList()));
+        return result;
     }
 }

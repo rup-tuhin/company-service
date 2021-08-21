@@ -20,7 +20,7 @@ public class CompanyDAO implements Serializable {
     @Column
     private String phoneNumber;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OwnerDAO> owners;
 
     public Long getCompanyId() {
