@@ -19,7 +19,8 @@ public class CompanyDAO implements Serializable {
     private String country;
     @Column
     private String phoneNumber;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OwnerDAO> owners;
 
     public Long getCompanyId() {

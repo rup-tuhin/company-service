@@ -28,7 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     public Company createCompany(Company company) {
         CompanyDAO toBeSaved = mapper.map(company, CompanyDAO.class);
-        CompanyDAO savedRecord = companyRepository.saveAndFlush(toBeSaved);
+        CompanyDAO savedRecord = companyRepository.save(toBeSaved);
         return mapper.map(savedRecord, Company.class);
 
     }
@@ -58,7 +58,7 @@ public class CompanyServiceImpl implements CompanyService {
         CompanyDAO record = companyRepository.findOne(Example.of(example)).orElse(null);
         if(record != null){
             example.setCompanyId(record.getCompanyId());
-            CompanyDAO savedRecord = companyRepository.saveAndFlush(example);
+            CompanyDAO savedRecord = companyRepository.save(example);
             return mapper.map(savedRecord, Company.class);
         }
         return null;
@@ -69,7 +69,7 @@ public class CompanyServiceImpl implements CompanyService {
         CompanyDAO record = companyRepository.findById(companyId).orElse(null);
         if(record != null){
             record.getOwners().add(mapper.map(owner, OwnerDAO.class));
-            CompanyDAO savedRecord = companyRepository.saveAndFlush(record);
+            CompanyDAO savedRecord = companyRepository.save(record);
             return mapper.map(savedRecord, Company.class);
         }
         return null;

@@ -74,18 +74,27 @@ public class CompanyRepositoryTest {
         CompanyDAO updatedRecord = testRepo.findById(company.getCompanyId()).orElse(null);
         assertNotNull(updatedRecord);
         assertNotNull(updatedRecord.getCompanyId());
-        assertEquals("test company", updatedRecord.getCompanyName());
-        assertEquals("IN", updatedRecord.getCountry());
-        assertEquals("123456", updatedRecord.getPhoneNumber());
+        assertEquals("updated company", updatedRecord.getCompanyName());
+        assertEquals("US", updatedRecord.getCountry());
+        assertEquals("98765", updatedRecord.getPhoneNumber());
         assertNotNull(updatedRecord.getOwners());
         assertEquals(2, updatedRecord.getOwners().size());
         assertNotNull(updatedRecord.getOwners().get(0).getOwnerId());
-        assertEquals("Test Owner 1", updatedRecord.getOwners().get(0).getName());
-        assertEquals("123123", updatedRecord.getOwners().get(0).getSocialSecurityNumber());
+        assertEquals("Updated Owner 1", updatedRecord.getOwners().get(0).getName());
+        assertEquals("321321", updatedRecord.getOwners().get(0).getSocialSecurityNumber());
         assertNotNull(updatedRecord.getOwners().get(1).getOwnerId());
-        assertEquals("Test Owner 2", updatedRecord.getOwners().get(1).getName());
-        assertEquals("456456", updatedRecord.getOwners().get(1).getSocialSecurityNumber());
+        assertEquals("Updated Owner 2", updatedRecord.getOwners().get(1).getName());
+        assertEquals("654654", updatedRecord.getOwners().get(1).getSocialSecurityNumber());
     }
+
+    @Test
+    public void it_should_delete_company() {
+        CompanyDAO company = getCompanyDAO();
+        Long savedRecId = entityManager.persistAndFlush(company).getCompanyId();
+        testRepo.deleteById(savedRecId);
+        assertNull(testRepo.findById(savedRecId).orElse(null));
+    }
+
 
     private CompanyDAO getCompanyDAO() {
         OwnerDAO owner1 = new OwnerDAO();
