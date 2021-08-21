@@ -4,8 +4,12 @@ import com.rup.dit.companyservice.domain.CompanyDAO;
 import com.rup.dit.companyservice.domain.OwnerDAO;
 import com.rup.dit.companyservice.model.Company;
 import com.rup.dit.companyservice.model.Owner;
+import org.assertj.core.util.Lists;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class TestData {
     public static CompanyDAO getCompanyDAO() {
@@ -21,7 +25,7 @@ public class TestData {
         company.setCompanyName("test company");
         company.setCountry("IN");
         company.setPhoneNumber("123456");
-        company.setOwners(Arrays.asList(owner1, owner2));
+        company.setOwners(Lists.newArrayList(owner1, owner2));
 
         return company;
     }

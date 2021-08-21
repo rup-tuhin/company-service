@@ -19,13 +19,4 @@ public class Owner {
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Owner{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", socialSecurityNumber='").append(socialSecurityNumber).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }

@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-    private Long companyId;
+    private Long id;
     private String companyName;
     private String country;
     private String phoneNumber;
     private List<Owner> owners;
 
-    public Long getCompanyId() {
-        return companyId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCompanyName() {
@@ -49,14 +49,4 @@ public class Company {
         return owners;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Company{");
-        sb.append("companyName='").append(companyName).append('\'');
-        sb.append(", country='").append(country).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append(", owners=").append(owners);
-        sb.append('}');
-        return sb.toString();
-    }
 }
