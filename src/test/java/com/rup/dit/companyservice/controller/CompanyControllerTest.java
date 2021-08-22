@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CompanyController.class)
 public class CompanyControllerTest {
 
+    public static final String API_TOKEN = "Basic YWRtaW46UEAkJHcwcmQh";
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,7 +38,8 @@ public class CompanyControllerTest {
         when(service.createCompany(any(Company.class))).thenReturn(data);
         mockMvc.perform(post("/company")
                 .content("{}")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", API_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -50,7 +52,8 @@ public class CompanyControllerTest {
         Company data = new Company();
         data.setCompanyName("all companies");
         when(service.getAllCompanies()).thenReturn(Lists.list(data));
-        mockMvc.perform(get("/company"))
+        mockMvc.perform(get("/company")
+                .header("Authorization", API_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -63,7 +66,8 @@ public class CompanyControllerTest {
         Company data = new Company();
         data.setCompanyName("detailed company");
         when(service.getCompanyDetails(eq(1234L))).thenReturn(data);
-        mockMvc.perform(get("/company/1234"))
+        mockMvc.perform(get("/company/1234")
+                .header("Authorization", API_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -78,7 +82,8 @@ public class CompanyControllerTest {
         when(service.updateCompany(any(Company.class), eq(1234L))).thenReturn(data);
         mockMvc.perform(put("/company/1234")
                 .content("{}")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", API_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -94,7 +99,8 @@ public class CompanyControllerTest {
         when(service.addOwner(anyLong(), any(Owner.class))).thenReturn(data);
         mockMvc.perform(post("/company/1234/owner")
                 .content("{}")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", API_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -107,7 +113,8 @@ public class CompanyControllerTest {
     public void shouldValidateSSN() throws Exception {
         when(service.checkSocialSecurityNumber(eq("13579"))).thenReturn("valid");
         mockMvc.perform(get("/company/1234/owner/validate")
-                .param("ssNumber", "13579"))
+                .param("ssNumber", "13579")
+                .header("Authorization", API_TOKEN))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.TEXT_PLAIN))

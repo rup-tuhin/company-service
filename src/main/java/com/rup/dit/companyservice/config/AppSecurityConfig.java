@@ -45,7 +45,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 csrf().disable()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/**").authenticated();
+                .antMatchers("/**").authenticated().and().httpBasic();
     }
 
     @Bean
