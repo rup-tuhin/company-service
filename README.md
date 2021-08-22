@@ -45,14 +45,18 @@ Once started, You can import the APIs in Postman using the below link :
 
    - http://localhost:8080/v2/api-docs
 
-The Application is runnable on Docker platform. 
+Check the H2 DB in the below URL. Login using credential - sa/password.
+
+   - http://localhost:8080/h2-console/
+
+The Application is also runnable on Docker platform. 
 
 Perform the below step to get the image registered in local Docker platform
 
 1. docker build -t spring/company-service:1.0 .
 2. docker run -p 8080:8080 spring/company-service:1.0
    
-    * Check the swagger ui - http://localhost:8080/swagger-ui
+    * Check the swagger ui - http://localhost:8080/swagger-ui/index.html
 
 3. To perform the below operations use CURL command << as Admin user >>
    

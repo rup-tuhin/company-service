@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,8 +29,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter implements W
             "/webjars/**",
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
             // other public endpoints of your API may be appended to this array
+            "/h2-console/**"
     };
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
@@ -41,12 +43,18 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.
-                csrf().disable()
+        http
+                .csrf().disable()
+                .headers().frameOptions().sameOrigin().and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/**").authenticated().and().httpBasic();
     }
+
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers(AUTH_WHITELIST);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
