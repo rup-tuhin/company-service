@@ -38,7 +38,7 @@ public class CompanyServiceImplTest {
 
 
     @Test
-    public void createCompany() {
+    public void shouldCreateCompany() {
         Company company = getCompany();
         CompanyDAO companyDAO = getCompanyDAO();
         when(mapper.map(company, CompanyDAO.class)).thenReturn(companyDAO);
@@ -52,13 +52,13 @@ public class CompanyServiceImplTest {
     }
 
     @Test
-    public void getAllCompanies() {
+    public void shouldGetAllCompanies() {
         service.getAllCompanies();
         verify(repository).findAll();
     }
 
     @Test
-    public void getCompanyDetails() {
+    public void shouldGetCompanyDetails() {
         Long testCompanyID = new Random().nextLong();
         when(repository.findById(anyLong())).thenReturn(Optional.of(getCompanyDAO()));
         when(mapper.map(any(CompanyDAO.class), eq(Company.class))).thenReturn(new Company());
@@ -68,7 +68,7 @@ public class CompanyServiceImplTest {
     }
 
     @Test
-    public void updateCompany() {
+    public void shouldUpdateCompany() {
         CompanyDAO companyDAO = new CompanyDAO();
         companyDAO.setCompanyName("updated company");
         companyDAO.setCountry("usa");
@@ -77,8 +77,8 @@ public class CompanyServiceImplTest {
         when(mapper.map(any(Company.class), eq(CompanyDAO.class))).thenReturn(companyDAO);
         CompanyDAO existingRecord = new CompanyDAO();
         existingRecord.setCompanyId(new Random().nextLong());
-        when(repository.findOne(any())).thenReturn(Optional.of(existingRecord));
-        service.updateCompany(new Company());
+        when(repository.findById(anyLong())).thenReturn(Optional.of(existingRecord));
+        service.updateCompany(new Company(), 1234L);
         ArgumentCaptor<CompanyDAO> reqToBeSaved = ArgumentCaptor.forClass(CompanyDAO.class);
         verify(repository).save(reqToBeSaved.capture());
         assertEquals(existingRecord.getCompanyId(), reqToBeSaved.getValue().getCompanyId());
@@ -89,7 +89,7 @@ public class CompanyServiceImplTest {
     }
 
     @Test
-    public void addOwner() {
+    public void shouldAddOwner() {
         Long companyId = new Random().nextLong();
         Owner owner = new Owner();
         owner.setName("Add me");
@@ -103,7 +103,7 @@ public class CompanyServiceImplTest {
     }
 
     @Test
-    public void checkSocialSecurityNumber() {
+    public void shouldCheckSocialSecurityNumber() {
         String result = service.checkSocialSecurityNumber(anyString());
         assertTrue("valid".equals(result) || "invalid".equals(result));
     }

@@ -13,19 +13,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class CompanyServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CompanyServiceApplication.class, args);
-	}
-	@Bean
-	public Docket companyApi(){
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.rup.dit"))
-				.build();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CompanyServiceApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    @Bean
+    public Docket companyApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.rup.dit"))
+                .build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 }

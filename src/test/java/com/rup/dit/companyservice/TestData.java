@@ -6,11 +6,6 @@ import com.rup.dit.companyservice.model.Company;
 import com.rup.dit.companyservice.model.Owner;
 import org.assertj.core.util.Lists;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class TestData {
     public static CompanyDAO getCompanyDAO() {
         OwnerDAO owner1 = new OwnerDAO();

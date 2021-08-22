@@ -6,10 +6,15 @@ import com.rup.dit.companyservice.model.Owner;
 import java.util.List;
 
 public interface CompanyService {
-    public Company createCompany(Company company);
-    public List<Company> getAllCompanies();
-    public Company getCompanyDetails(Long companyId);
-    public Company updateCompany(Company company);
-    public Company addOwner(Long companyId, Owner owner);
-    public String checkSocialSecurityNumber(String socialSecurityNumber);
+    Company createCompany(Company company);
+
+    List<Company> getAllCompanies();
+
+    Company getCompanyDetails(Long companyId);
+
+    Company updateCompany(Company company, Long companyId);
+
+    Company addOwner(Long companyId, Owner owner);
+
+    String checkSocialSecurityNumber(String socialSecurityNumber);
 }

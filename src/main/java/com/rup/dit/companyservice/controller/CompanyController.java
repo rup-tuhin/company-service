@@ -31,21 +31,21 @@ public class CompanyController {
         return service.getCompanyDetails(companyId);
     }
 
-    @PutMapping
-    public Company updateCompany(Company company) {
+    @PutMapping(path = "{id}")
+    public Company updateCompany(@RequestBody Company company, @PathVariable(name = "id") Long companyId) {
         //TODO: input validation and security checks.
-        return service.updateCompany(company);
+        return service.updateCompany(company, companyId);
     }
 
-    @PostMapping(path = "{id}/owners")
+    @PostMapping(path = "{id}/owner")
     public Company addOwners(@PathVariable(name = "id") Long companyId,
                              @RequestBody Owner owner) {
         //TODO: input validation and security checks.
         return service.addOwner(companyId, owner);
     }
 
-    @GetMapping(path = "{id}/owners/validate")
-    public String checkSocialSecurityNumber(@RequestParam(name="ssNumber") String socialSecurityNumber) {
+    @GetMapping(path = "{id}/owner/validate")
+    public String checkSocialSecurityNumber(@RequestParam(name = "ssNumber") String socialSecurityNumber) {
         return service.checkSocialSecurityNumber(socialSecurityNumber);
     }
 

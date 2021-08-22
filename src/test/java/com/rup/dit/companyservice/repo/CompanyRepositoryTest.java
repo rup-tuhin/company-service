@@ -23,7 +23,7 @@ public class CompanyRepositoryTest {
     private CompanyRepository testRepo;
 
     @Test
-    public void it_should_create_company() {
+    public void shouldCreateCompany() {
         CompanyDAO company = new CompanyDAO();
         company.setCompanyName("test company");
         company = entityManager.persistAndFlush(company);
@@ -31,7 +31,7 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    public void it_should_read_company() {
+    public void shouldReadCompany() {
         CompanyDAO company = getCompanyDAO();
         assertNull(company.getCompanyId());
         company.getOwners().forEach(o -> assertNull(o.getOwnerId()));
@@ -53,7 +53,7 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    public void it_should_update_company() {
+    public void shouldUpdateCompany() {
         CompanyDAO company = getCompanyDAO();
         assertNull(company.getCompanyId());
         company.getOwners().forEach(o -> assertNull(o.getOwnerId()));
@@ -86,7 +86,7 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    public void it_should_delete_company() {
+    public void shouldDeleteCompany() {
         CompanyDAO company = getCompanyDAO();
         Long savedRecId = entityManager.persistAndFlush(company).getCompanyId();
         testRepo.deleteById(savedRecId);

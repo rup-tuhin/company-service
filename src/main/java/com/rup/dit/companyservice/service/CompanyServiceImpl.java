@@ -7,7 +7,6 @@ import com.rup.dit.companyservice.model.Owner;
 import com.rup.dit.companyservice.repo.CompanyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,12 +47,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company updateCompany(Company company) {
-        CompanyDAO example = mapper.map(company, CompanyDAO.class);
-        CompanyDAO record = companyRepository.findOne(Example.of(example)).orElse(null);
-        if (record != null) {
-            example.setCompanyId(record.getCompanyId());
-            CompanyDAO savedRecord = companyRepository.save(example);
+    public Company updateCompany(Company company, Long companyId) {
+        CompanyDAO newRecord = mapper.map(company, CompanyDAO.class);
+        CompanyDAO oldRecord = companyRepository.findById(companyId).orElse(null);
+        if (oldRecord != null) {
+            newRecord.setCompanyId(oldRecord.getCompanyId());
+            CompanyDAO savedRecord = companyRepository.save(newRecord);
             return extractModelFromDAO(savedRecord);
         }
         return null;
