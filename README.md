@@ -27,41 +27,80 @@ The API may support:
 
 There is a backend that can check the Social Security Number by randomly returning "valid/invalid".
 
-TODO: The API should define at least two access groups; e.g. one that will not be able to read the Social Security Number.
+The API has two users defined.
+1. user/Password : Has access to all "/company/\*" resources. Cannot view Social Security Number of Owners.
+2. admin/P@$$w0rd! : Has access to all "/company/\*" resources. Can view the Social Security Number of Owners. 
 
 # Getting Started
 
-The Application is runnable on Docker platform. 
+Check out the code and perform a maven build
 
--Docker build
+      $ mvn clean package
+
+Run the app using maven plugin
+      
+      $ mvn spring-boot:run
+
+Once started, You can import the APIs in Postman using the below link :
+
+   - http://localhost:8080/v2/api-docs
+
+Check the H2 DB in the below URL. Login using credential - sa/password.
+
+   - http://localhost:8080/h2-console/
+
+The Application is also runnable on Docker platform. 
+
+Perform the below step to get the image registered in local Docker platform
 
 1. docker build -t spring/company-service:1.0 .
 2. docker run -p 8080:8080 spring/company-service:1.0
    
-    * Check the swagger ui - http://localhost:8080/swagger-ui
+    * Check the swagger ui - http://localhost:8080/swagger-ui/index.html
 
-3. To perform the below operations use CURL command 
+3. To perform the below operations use CURL command << as Admin user >>
    
    a. Create a New company :
     
-    - curl -X POST "http://localhost:8080/company" -H "accept: \*/\*" -H "Content-Type: application/json" -d "{ \"companyName\": \"Test Company\", \"country\": \"India\", \"owners\": [ { \"name\": \"Bijay Singh\", \"socialSecurityNumber\": \"489\" }, { \"name\": \"Ajay Singh\", \"socialSecurityNumber\": \"123\" } ], \"phoneNumber\": \"789456\"}"
+    - curl -X POST "http://localhost:8080/company" -H "accept: \*/\*" 
+      -H "Content-Type: application/json"
+      -H "Authorization: Basic YWRtaW46UEAkJHcwcmQh"
+      -d "{ \"companyName\": \"Test Company\", \"country\": \"India\", \"owners\": [ { \"name\": \"Bijay Singh\", \"socialSecurityNumber\": \"489\" }, { \"name\": \"Ajay Singh\", \"socialSecurityNumber\": \"123\" } ], \"phoneNumber\": \"789456\"}"
     
     b. Get a list of all companies :
 
-    - curl -X GET "http://localhost:8080/company" -H "accept: \*/\*"
+    - curl -X GET "http://localhost:8080/company" -H "accept: \*/\*" -H "Authorization: Basic YWRtaW46UEAkJHcwcmQh"
     
     c. Get details about a company :
-    - curl -X GET "http://localhost:8080/company/1 " -H "accept: \*/\*"
+    - curl -X GET "http://localhost:8080/company/1 " -H "accept: \*/\*" -H "Authorization: Basic YWRtaW46UEAkJHcwcmQh"
     
     d. Update a company
    
-    -  curl -X PUT "http://localhost:8080/company/1" -H "accept: \*/\*" -H "Content-Type: application/json" -d "{ \"companyName\": \"Updated Company\", \"country\": \"USA\", \"owners\": [ { \"name\": \"Bijay Singh\", \"socialSecurityNumber\": \"489\" }, { \"name\": \"Ajay Singh\", \"socialSecurityNumber\": \"123\" } ], \"phoneNumber\": \"456789\"}"
+    -  curl -X PUT "http://localhost:8080/company/1" 
+       -H "accept: \*/\*" -H "Content-Type: application/json"
+       -H "Authorization: Basic YWRtaW46UEAkJHcwcmQh"
+       -d "{ \"companyName\": \"Updated Company\", \"country\": \"USA\", \"owners\": [ { \"name\": \"Bijay Singh\", \"socialSecurityNumber\": \"489\" }, { \"name\": \"Ajay Singh\", \"socialSecurityNumber\": \"123\" } ], \"phoneNumber\": \"456789\"}"
  
     e. Add an owner of the company
-    - curl -X POST "http://localhost:8080/company/1/owner" -H "accept: \*/\*" -H "Content-Type: application/json" -d "{ \"name\": \"Dillip Singh\", \"socialSecurityNumber\": \"741\"}" 
+    - curl -X POST "http://localhost:8080/company/1/owner" -H "accept: \*/\*"
+      -H "Content-Type: application/json"
+      -H "Authorization: Basic YWRtaW46UEAkJHcwcmQh"
+      -d "{ \"name\": \"Dillip Singh\", \"socialSecurityNumber\": \"741\"}"
     
     f. Check of Social Security Number
-    - curl -X GET "http://localhost:8080/company/{id}/owner/validate?ssNumber=342" -H "accept: \*/\*"
+    - curl -X GET "http://localhost:8080/company/{id}/owner/validate?ssNumber=342" 
+      -H "accept: \*/\*" 
+      -H "Authorization: Basic YWRtaW46UEAkJHcwcmQh"
+      
+4. Accessing the URL as user account. This wont show the SSN of Owners
+    
+    a. Get a list of all companies :
+
+    - curl -X GET "http://localhost:8080/company" -H "accept: \*/\*" -H "Authorization: Basic dXNlcjpQYXNzd29yZA=="
+
+    b. Get details about a company :
+    
+    - curl -X GET "http://localhost:8080/company/1 " -H "accept: \*/\*" -H "Authorization: Basic dXNlcjpQYXNzd29yZA=="
 
 ### Reference Documentation
 For further reference, please consider the following sections:

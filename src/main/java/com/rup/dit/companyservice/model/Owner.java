@@ -1,7 +1,11 @@
 package com.rup.dit.companyservice.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 public class Owner {
+    @JsonView({View.User.class, View.Admin.class})
     private String name;
+    @JsonView(View.Admin.class)
     private String socialSecurityNumber;
 
     public String getName() {

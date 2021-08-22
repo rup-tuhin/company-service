@@ -1,13 +1,20 @@
 package com.rup.dit.companyservice.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
+    @JsonView({View.User.class, View.Admin.class})
     private Long id;
+    @JsonView({View.User.class, View.Admin.class})
     private String companyName;
+    @JsonView({View.User.class, View.Admin.class})
     private String country;
+    @JsonView({View.User.class, View.Admin.class})
     private String phoneNumber;
+    @JsonView({View.User.class, View.Admin.class})
     private List<Owner> owners;
 
     public Long getId() {
