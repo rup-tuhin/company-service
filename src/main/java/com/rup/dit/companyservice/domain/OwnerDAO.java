@@ -9,8 +9,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class OwnerDAO implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "company_gen")
-    @SequenceGenerator(name = "company_gen", sequenceName = "company_seq")
+    @GeneratedValue(strategy = SEQUENCE, generator = "owner_gen")
+    @SequenceGenerator(name = "owner_gen", sequenceName = "owner_seq")
     private Long ownerId;
     @Column
     private String name;
