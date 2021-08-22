@@ -6,7 +6,7 @@ FROM maven
 COPY pom.xml .
 COPY src src
 ### Maven build
-RUN mvn clean install
+RUN mvn clean package
 RUN ls -ltr
 ### locate the jar & start container
 ARG JAR_FILE=target/*.jar
